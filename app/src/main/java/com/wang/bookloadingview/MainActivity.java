@@ -25,11 +25,13 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.show_btn)
     public void onMShowBtnClicked() {
-        mBookLoadingView.setVisibility(View.VISIBLE, 1000);
+        //start loading
+        mBookLoadingView.setVisibility(View.VISIBLE, 0);
     }
 
     @OnClick(R.id.hide_btn)
     public void onMHideBtnClicked() {
+        //stop loading
         mBookLoadingView.setVisibility(View.GONE);
     }
 }
