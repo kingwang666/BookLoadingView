@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BookLoadingView</string>
+
+    <string name="loading">加载中...</string>
+
+    <string name="label_1">Append Jumping Dots</string>
+
+    <string name="label_2">Make first word jump</string>
+</resources>

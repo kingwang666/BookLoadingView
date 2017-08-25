@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:layout_width="176dp"
+        android:layout_height="116dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_book_loading"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:padding="8dp">
+
+        <com.wang.bookloading.widget.TickView
+            android:id="@+id/tick_view"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:paddingTop="24dp"/>
+
+        <com.wang.bookloading.widget.TextMaskView
+            android:id="@+id/text_mask_view"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:layout_gravity="end"
+            android:padding="8dp"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/loading_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="72dp"
+        android:paddingTop="8dp"
+        android:text="@string/loading"
+        android:textSize="16sp"/>
+
+</merge>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipChildren="false"
+    tools:context="com.wang.bookloadingview.MainActivity">
+
+    <Button
+        android:id="@+id/show_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="show"
+        android:layout_margin="16dp"/>
+
+    <Button
+        android:id="@+id/hide_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hide"
+        android:layout_gravity="end"
+        android:layout_margin="16dp"/>
+
+
+    <com.wang.bookloading.widget.BookLoadingView
+        android:id="@+id/book_loading_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:blv_tickColor="@color/light_green500"
+        app:blv_tickStrokeWidth="4dp"
+        app:blv_lineColor="@color/grey500"
+        app:blv_lineStrokeWidth="8dp">
+
+    </com.wang.bookloading.widget.BookLoadingView>
+
+</FrameLayout>

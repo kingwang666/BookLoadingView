@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TickView">
+        <attr name="tv_color" format="color"/>
+        <attr name="tv_percent" format="float"/>
+        <attr name="tv_strokeWidth" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="TextMaskView">
+        <attr name="tmv_lines" format="float"/>
+        <attr name="tmv_color" format="color"/>
+        <attr name="tmv_percent" format="float"/>
+        <attr name="tmv_strokeWidth" format="dimension"/>
+        <attr name="tmv_linePadding" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="BookLoadingView">
+        <attr name="blv_delay" format="integer"/>
+        <attr name="blv_firstDuration" format="integer"/>
+        <attr name="blv_textDuration" format="integer"/>
+        <attr name="blv_pageDuration" format="integer"/>
+        <attr name="blv_startColor" format="color"/>
+        <attr name="blv_endColor" format="color"/>
+        <attr name="blv_tickColor" format="color"/>
+        <attr name="blv_tickStrokeWidth" format="dimension"/>
+        <attr name="blv_lines" format="float"/>
+        <attr name="blv_lineColor" format="color"/>
+        <attr name="blv_lineStrokeWidth" format="dimension"/>
+        <attr name="blv_linePadding" format="dimension"/>
+        <attr name="blv_textSize" format="dimension"/>
+        <attr name="blv_textColor" format="color"/>
+        <attr name="blv_text" format="string"/>
+    </declare-styleable>
+</resources>
