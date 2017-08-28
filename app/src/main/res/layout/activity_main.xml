@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clipChildren="false"
+    android:clipToPadding="false"
     tools:context="com.wang.bookloadingview.MainActivity">
 
     <Button
@@ -26,13 +27,14 @@
 
     <com.wang.bookloading.widget.BookLoadingView
         android:id="@+id/book_loading_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="180dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
         app:blv_tickColor="@color/light_green500"
         app:blv_tickStrokeWidth="4dp"
         app:blv_lineColor="@color/grey500"
-        app:blv_lineStrokeWidth="8dp">
+        app:blv_lineStrokeWidth="8dp"
+        app:blv_elevation="3dp">
 
     </com.wang.bookloading.widget.BookLoadingView>
 

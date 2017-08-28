@@ -3,35 +3,47 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout
-        android:layout_width="176dp"
-        android:layout_height="116dp"
+        android:id="@+id/parent_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/bg_book_loading"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:orientation="horizontal"
         android:padding="8dp">
+
 
         <com.wang.bookloading.widget.TickView
             android:id="@+id/tick_view"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:paddingTop="24dp"/>
+            android:padding="8dp"
+            android:layout_gravity="start"/>
 
-        <com.wang.bookloading.widget.TextMaskView
-            android:id="@+id/text_mask_view"
-            android:layout_width="80dp"
-            android:layout_height="100dp"
-            android:layout_gravity="end"
-            android:padding="8dp"/>
+
+            <View
+                android:id="@+id/mask_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:layout_gravity="end"/>
+
+            <com.wang.bookloading.widget.TextMaskView
+                android:id="@+id/text_mask_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:layout_gravity="end"/>
+
     </FrameLayout>
 
     <TextView
         android:id="@+id/loading_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="72dp"
+        android:layout_gravity="center_horizontal|bottom"
         android:paddingTop="8dp"
         android:text="@string/loading"
         android:textSize="16sp"/>

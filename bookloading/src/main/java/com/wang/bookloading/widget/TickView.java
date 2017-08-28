@@ -26,7 +26,7 @@ import com.wang.bookloading.ViewUtil;
 
 public class TickView extends View {
 
-    private static final int DEF_DRAW_SIZE = 25;
+    private static final int DEF_DRAW_SIZE = 100;
 
     private Paint mPaint;
     private RectF mArcRect;

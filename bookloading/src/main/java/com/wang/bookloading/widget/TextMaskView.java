@@ -22,7 +22,7 @@ import com.wang.bookloading.ViewUtil;
 
 public class TextMaskView extends View {
 
-    private static final int DEF_DRAW_SIZE = 25;
+    private static final int DEF_DRAW_SIZE = 100;
 
     Paint mPaint;
 

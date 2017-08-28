@@ -15,11 +15,12 @@ import android.support.annotation.Nullable;
 import android.support.annotation.Px;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.StyleRes;
-import android.text.TextUtils;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
@@ -51,6 +52,8 @@ public class BookLoadingView extends FrameLayout {
     private TickView mTickView;
     private TextMaskView mTextMaskView;
     private TextView mLoadingTV;
+    private View mMaskView;
+    private View mParentView;
 
     private ValueAnimator mPathAnim;
     private Rotate3dAnimation mFirst3DAnim;
@@ -65,6 +68,8 @@ public class BookLoadingView extends FrameLayout {
     private int mPageDuration;
     private int mStartColor;
     private int mEndColor;
+
+    private int mWidth;
 
     private boolean mStopped = true;
 
@@ -92,11 +97,17 @@ public class BookLoadingView extends FrameLayout {
 
     private void init(Context context, AttributeSet attrs) {
         setClipChildren(false);
+        setClipToPadding(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setClipToOutline(false);
+        }
         LayoutInflater.from(context).inflate(R.layout.layout_book_loading, this, true);
 
         mTickView = (TickView) findViewById(R.id.tick_view);
         mTextMaskView = (TextMaskView) findViewById(R.id.text_mask_view);
         mLoadingTV = (TextView) findViewById(R.id.loading_tv);
+        mMaskView = findViewById(R.id.mask_view);
+        mParentView = findViewById(R.id.parent_view);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BookLoadingView);
         mDelay = typedArray.getInteger(R.styleable.BookLoadingView_blv_delay, 0);
@@ -113,10 +124,23 @@ public class BookLoadingView extends FrameLayout {
         setLineColor(typedArray.getColor(R.styleable.BookLoadingView_blv_lineColor, DEFAULT_COLOR));
         setTextSize(typedArray.getDimensionPixelSize(R.styleable.BookLoadingView_blv_textSize, (int) mLoadingTV.getTextSize()));
         setTextColor(typedArray.getColor(R.styleable.BookLoadingView_blv_textColor, mLoadingTV.getCurrentTextColor()));
+        int elevation = typedArray.getDimensionPixelSize(R.styleable.BookLoadingView_blv_elevation, 0);
+        initView(elevation);
         if (typedArray.hasValue(R.styleable.BookLoadingView_blv_text)) {
             setText(typedArray.getString(R.styleable.BookLoadingView_blv_text));
         }
         typedArray.recycle();
+    }
+
+    private void initView(int elevation) {
+        if (!isInEditMode()) {
+            mTickView.setBackgroundColor(mStartColor);
+            mTextMaskView.setBackgroundColor(mStartColor);
+            mMaskView.setBackgroundColor(mStartColor);
+        }
+        ViewCompat.setElevation(mTickView, elevation);
+        ViewCompat.setElevation(mTextMaskView, elevation);
+        ViewCompat.setElevation(mMaskView, elevation);
     }
 
     @Override
@@ -127,6 +151,19 @@ public class BookLoadingView extends FrameLayout {
         }
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int width = (mParentView.getMeasuredWidth() - mParentView.getPaddingLeft() - mParentView.getPaddingRight()) / 2;
+        if (mWidth == 0 || mWidth != width) {
+            ViewGroup.LayoutParams params = mTickView.getLayoutParams();
+            params.width = width;
+            params = mTextMaskView.getLayoutParams();
+            params.width = width;
+            params = mMaskView.getLayoutParams();
+            params.width = width;
+        }
+    }
 
     private void startLoading(long delay) {
         if (!mStopped
@@ -249,26 +286,6 @@ public class BookLoadingView extends FrameLayout {
         mSec3DAnim = new Rotate3dAnimation(-90, -180, 0, centerY, 0, false);
         mSec3DAnim.setDuration(mPageDuration / 2);
         mSec3DAnim.setInterpolator(new DecelerateInterpolator());
-        mSec3DAnim.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                if (!mStopped) {
-                    mTickView.setPercent(0);
-                    mTextMaskView.clearAnimation();
-                    startPathAnim(200);
-                }
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
     }
 
     private void initColorAnim() {
@@ -300,6 +317,34 @@ public class BookLoadingView extends FrameLayout {
         mColorAnim.setInterpolator(new AccelerateDecelerateInterpolator());
         mColorAnim.setStartDelay(mTextDuration > 500 ? mTextDuration - 200 : mTextDuration);
         mColorAnim.setDuration(mPageDuration);
+        mColorAnim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                if (!mStopped) {
+                    mMaskView.setVisibility(VISIBLE);
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (!mStopped) {
+                    mTickView.setPercent(0);
+                    mMaskView.setVisibility(GONE);
+                    mTextMaskView.clearAnimation();
+                    startPathAnim(200);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
     @Override
@@ -324,7 +369,6 @@ public class BookLoadingView extends FrameLayout {
             mFirst3DAnim = null;
         }
         if (mSec3DAnim != null) {
-            mSec3DAnim.setAnimationListener(null);
             mSec3DAnim = null;
         }
         if (mColorAnim != null) {
